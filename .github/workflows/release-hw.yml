@@ -28,7 +28,7 @@ jobs:
         with:
           repository: sut-ai/${{ github.event.inputs.repo }}
           ref: build
-          ssh-key: ${{ secrets[github.event.inputs.repo] }}
+          token: ${{ secrets.HW_TOKEN }}
           path: ${{ env.HW_REPO_PATH }}
 
       - name: Make target directory
