@@ -1,0 +1,43 @@
+name: Release HW
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'The repository name'
+        required: true
+      input:
+        description: 'PDF file to be released (MUST be built inside build branch)'
+        required: true
+        default: 'question.pdf'
+      target_file:
+        description: 'Path to the target file'
+        required: true
+
+jobs:
+  build:
+    env:
+      HW_REPO_PATH: /tmp/hw
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Checkout HW repository
+        uses: actions/checkout@v2
+        with:
+          repository: sut-ai/${{ github.event.inputs.repo }}
+          ref: build
+          ssh-key: ${{ secrets.RESOURCES_KEY }}
+          path: ${{ env.HW_REPO_PATH }}
+
+      - name: Copy file to target
+        run: cp ${{ env.HW_REPO_PATH }}/${{ github.event.inputs.input }} ${{ github.event.inputs.target_file }}
+
+      - name: Commit the result
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Release ${{ github.event.inputs.repo }}@build:${{ github.event.inputs.input }}' into ${{ github.event.inputs.target_file }}'
+          repository: .
+          commit_user_name: ${{ github.actor }}
+          commit_user_email: ${{ github.actor }}@users.noreply.github.com
