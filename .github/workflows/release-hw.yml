@@ -31,6 +31,9 @@ jobs:
           ssh-key: ${{ secrets.RESOURCES_KEY }}
           path: ${{ env.HW_REPO_PATH }}
 
+      - name: Make target directory
+        run: mkdir -p $(dirname ${{ env.TARGET_FILE }})
+
       - name: Copy file to target
         run: cp ${{ env.HW_REPO_PATH }}/${{ github.event.inputs.input }} ${{ github.event.inputs.target_file }}
 
