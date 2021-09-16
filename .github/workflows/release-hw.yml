@@ -17,7 +17,7 @@ on:
 jobs:
   build:
     env:
-      HW_REPO_PATH: /tmp/hw
+      HW_REPO_PATH: tmp/hw
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,5 +39,6 @@ jobs:
         with:
           commit_message: 'Release ${{ github.event.inputs.repo }}@build:${{ github.event.inputs.input }} into ${{ github.event.inputs.target_file }}'
           repository: .
+          file_pattern: ${{ github.event.inputs.target_file }}
           commit_user_name: ${{ github.actor }}
           commit_user_email: ${{ github.actor }}@users.noreply.github.com
