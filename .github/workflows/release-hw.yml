@@ -37,7 +37,7 @@ jobs:
       - name: Commit the result
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'Release ${{ github.event.inputs.repo }}@build:${{ github.event.inputs.input }}' into ${{ github.event.inputs.target_file }}'
+          commit_message: 'Release ${{ github.event.inputs.repo }}@build:${{ github.event.inputs.input }} into ${{ github.event.inputs.target_file }}'
           repository: .
           commit_user_name: ${{ github.actor }}
           commit_user_email: ${{ github.actor }}@users.noreply.github.com
